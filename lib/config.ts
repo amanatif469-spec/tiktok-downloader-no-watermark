@@ -1,11 +1,16 @@
 export const siteConfig = {
-  name: process.env.NEXT_PUBLIC_SITE_NAME || 'TikTok Downloader — No Watermark',
-  shortName: 'TikTok Downloader',
+  name: process.env.NEXT_PUBLIC_SITE_NAME || 'TikSave — TikTok Downloader Without Watermark',
+  shortName: 'TikSave',
   description:
-    'Download publicly accessible TikTok videos without watermark in high definition. Fast, secure, and mobile-friendly with direct download links.',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
-  contactEmail: process.env.SITE_CONTACT_EMAIL || 'support@example.com',
+    'TikSave (Tik Save) is the fastest free tool to download TikTok videos without watermark in HD MP4 and MP3. No software installation needed.',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://tiktok-downloader-no-watermark-bo8u.vercel.app',
+  contactEmail: process.env.SITE_CONTACT_EMAIL || 'support@tiksave.com',
   keywords: [
+    'Tik Save',
+    'TikSave',
+    'TikSave app',
+    'Tik Save downloader',
+    'TikSave no watermark',
     'TikTok downloader without watermark',
     'TikTok video downloader',
     'Download TikTok videos online',

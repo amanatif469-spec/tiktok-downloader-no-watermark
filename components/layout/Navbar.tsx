@@ -28,11 +28,11 @@ export const Navbar: React.FC = () => {
             <Video className="w-5 h-5 text-gray-950 font-bold" />
           </div>
           <div className="flex flex-col">
-            <span className="font-extrabold text-base tracking-tight text-white group-hover:text-primary-cyan transition-colors">
-              {siteConfig.shortName}
+            <span className="font-extrabold text-lg tracking-tight text-white group-hover:text-primary-cyan transition-colors">
+              Tik<span className="text-primary-cyan">Save</span>
             </span>
             <span className="text-[10px] text-gray-400 font-mono tracking-wider uppercase -mt-0.5">
-              No Watermark HD
+              Tik Save • No Watermark
             </span>
           </div>
         </Link>

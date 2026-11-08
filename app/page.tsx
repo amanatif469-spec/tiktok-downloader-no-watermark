@@ -91,12 +91,12 @@ export default function HomePage() {
           {/* Eyebrow badge */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-card/80 border border-border text-xs font-medium text-gray-300 mb-6 backdrop-blur-md shadow-sm">
             <Sparkles className="w-3.5 h-3.5 text-primary-cyan animate-pulse" />
-            <span>Fast, Free &amp; High Definition MP4 Extraction</span>
+            <span>TikSave (Tik Save) — Fast &amp; Free HD Video Downloader</span>
           </div>
 
           {/* Main Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15]">
-            Download TikTok Videos{' '}
+            TikSave — Download TikTok Videos{' '}
             <span className="bg-gradient-to-r from-primary-cyan via-[#00c8ff] to-primary-magenta bg-clip-text text-transparent">
               Without Watermark
             </span>
@@ -104,7 +104,7 @@ export default function HomePage() {
 
           {/* Supporting Description */}
           <p className="mt-5 text-base sm:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            Paste a publicly accessible TikTok video link to retrieve available video information and download options in a simple, responsive interface.
+            TikSave allows you to paste any publicly accessible TikTok video link to download watermark-free MP4 videos and original MP3 audio in seconds.
           </p>
 
           {/* Core Interactive Downloader Tool */}
