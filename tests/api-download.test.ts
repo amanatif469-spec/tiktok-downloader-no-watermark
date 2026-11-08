@@ -60,16 +60,33 @@ describe('/api/download Route Handler', () => {
     expect(json.success).toBe(false);
   });
 
-  it('should return 503 PROVIDER_NOT_CONFIGURED when no provider credentials exist', async () => {
+  it('should successfully process TikTok video request when provider responds', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(
+      new Response(
+        JSON.stringify({
+          code: 0,
+          msg: 'success',
+          data: {
+            id: '7123456789012345678',
+            title: 'Sample Dance Video',
+            cover: 'https://p16.tiktokcdn.com/cover.jpg',
+            play: 'https://v16.tiktokcdn.com/video-no-wm.mp4',
+            music: 'https://sf16.tiktokcdn.com/music.mp3',
+            author: { unique_id: 'creator123', nickname: 'Creator' },
+          },
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      )
+    );
+
     const req = createRequest({
-      url: 'https://www.tiktok.com/@creator/video/7123456789012345678',
+      url: 'https://www.tiktok.com/@creator123/video/7123456789012345678',
     });
     const response = await POST(req);
-    // When no RAPIDAPI_KEY is present in env, it should respond with 503
-    expect(response.status).toBe(503);
+    expect(response.status).toBe(200);
     const json = await response.json();
-    expect(json.success).toBe(false);
-    expect(json.code).toBe('PROVIDER_NOT_CONFIGURED');
-    expect(json.error).toContain('RAPIDAPI_KEY');
+    expect(json.success).toBe(true);
+    expect(json.data.id).toBe('7123456789012345678');
+    expect(json.data.formats.length).toBeGreaterThan(0);
   });
 });

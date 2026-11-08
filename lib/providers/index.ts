@@ -1,49 +1,48 @@
 import { VideoMetadata } from '@/types/video';
 import { VideoProviderAdapter, ProviderError } from './types';
 import { RapidApiProvider } from './rapidapi';
+import { TikWmProvider } from './tikwm';
 
 export * from './types';
 export * from './rapidapi';
+export * from './tikwm';
 
-// Registry of available provider adapters
-const providers: VideoProviderAdapter[] = [new RapidApiProvider()];
+// Registry of available provider adapters in priority order
+const rapidApiProvider = new RapidApiProvider();
+const tikWmProvider = new TikWmProvider();
 
 /**
- * Returns the active configured provider adapter or null if none is configured
+ * Returns the active configured provider adapter
  */
-export function getActiveProvider(): VideoProviderAdapter | null {
-  for (const provider of providers) {
-    if (provider.isConfigured()) {
-      return provider;
-    }
+export function getActiveProvider(): VideoProviderAdapter {
+  if (rapidApiProvider.isConfigured()) {
+    return rapidApiProvider;
   }
-  return null;
+  return tikWmProvider;
 }
 
 /**
- * Executes video extraction with fallback support if multiple providers are active
+ * Executes video extraction with fallback support
+ * Tries RapidAPI if configured; seamlessly falls back to free high-speed TikWM provider
  */
 export async function extractTikTokVideo(url: string, signal?: AbortSignal): Promise<VideoMetadata> {
-  const configuredProviders = providers.filter((p) => p.isConfigured());
+  const activeProviders: VideoProviderAdapter[] = [];
 
-  if (configuredProviders.length === 0) {
-    throw new ProviderError(
-      'No video processing provider is configured. Please set RAPIDAPI_KEY in server environment variables to enable video extraction.',
-      'CONFIG_MISSING',
-      503
-    );
+  if (rapidApiProvider.isConfigured()) {
+    activeProviders.push(rapidApiProvider);
   }
+  activeProviders.push(tikWmProvider);
 
   let lastError: ProviderError | null = null;
 
-  for (const provider of configuredProviders) {
+  for (const provider of activeProviders) {
     try {
       return await provider.extract(url, signal);
     } catch (err) {
       if (err instanceof ProviderError) {
         lastError = err;
-        // Don't retry permanent client errors (like invalid video id or 404)
-        if (err.code === 'VIDEO_NOT_FOUND') {
+        // Don't retry if video is definitely private or deleted
+        if (err.code === 'VIDEO_NOT_FOUND' && activeProviders.indexOf(provider) === activeProviders.length - 1) {
           throw err;
         }
       } else {
@@ -58,7 +57,7 @@ export async function extractTikTokVideo(url: string, signal?: AbortSignal): Pro
   throw (
     lastError ||
     new ProviderError(
-      'All configured video extraction providers failed to process this URL.',
+      'Unable to extract video download streams from this URL. Please verify the video is public.',
       'UPSTREAM_ERROR',
       502
     )

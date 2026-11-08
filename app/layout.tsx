@@ -1,15 +1,8 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { siteConfig } from '@/lib/config';
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -70,8 +63,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`dark ${inter.variable}`}>
-      <body className="min-h-screen flex flex-col bg-background text-foreground antialiased selection:bg-primary-cyan/20 selection:text-primary-cyan">
+    <html lang="en" className="dark">
+      <body className="min-h-screen flex flex-col bg-background text-foreground antialiased selection:bg-primary-cyan/20 selection:text-primary-cyan font-sans">
         <Navbar />
         <main className="flex-1 w-full">{children}</main>
         <Footer />
