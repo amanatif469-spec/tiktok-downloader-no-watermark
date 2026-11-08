@@ -42,19 +42,22 @@ export const VideoResult: React.FC<VideoResultProps> = ({ video, onReset }) => {
   const handleTriggerDownload = (format: VideoDownloadFormat) => {
     setDownloadingFormatId(format.id);
 
-    // Open direct provider CDN download link in new tab or trigger browser download
+    const safeTitle = (video.title || 'video')
+      .slice(0, 30)
+      .replace(/[^a-zA-Z0-9_-]/g, '_');
+    const directDownloadUrl = `/api/download-file?url=${encodeURIComponent(format.url)}&name=tiksave_${safeTitle}_${video.id}&type=${format.format}`;
+
+    // Force browser direct file download
     const link = document.createElement('a');
-    link.href = format.url;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.download = `tiktok-${video.id}-${format.id}.${format.format}`;
+    link.href = directDownloadUrl;
+    link.setAttribute('download', `tiksave-${video.id}.${format.format}`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 
     setTimeout(() => {
       setDownloadingFormatId(null);
-    }, 2000);
+    }, 2500);
   };
 
   const noWmFormat = video.formats.find((f) => f.isWatermarkFree && f.format === 'mp4');

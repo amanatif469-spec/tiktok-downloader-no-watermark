@@ -1,11 +1,25 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
+import { InstallPrompt } from '@/components/pwa/InstallPrompt';
 import { siteConfig } from '@/lib/config';
+
+export const viewport: Viewport = {
+  themeColor: '#090b10',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'TikSave',
+  },
   title: {
     default: 'TikSave — Download TikTok Videos Without Watermark (Tik Save)',
     template: `%s | ${siteConfig.shortName}`,
@@ -68,6 +82,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className="min-h-screen flex flex-col bg-background text-foreground antialiased selection:bg-primary-cyan/20 selection:text-primary-cyan font-sans">
+        <InstallPrompt />
         <Navbar />
         <main className="flex-1 w-full">{children}</main>
         <Footer />
