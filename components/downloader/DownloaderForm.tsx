@@ -29,6 +29,15 @@ export const DownloaderForm: React.FC = () => {
 
   const abortControllerRef = useRef<AbortController | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
+
+  const scrollToResult = () => {
+    setTimeout(() => {
+      if (resultRef.current) {
+        resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 150);
+  };
 
   useEffect(() => {
     // Check if Clipboard API is supported
@@ -113,6 +122,7 @@ export const DownloaderForm: React.FC = () => {
     setApiError(null);
     setVideoResult(null);
     setIsLoading(true);
+    scrollToResult();
 
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -143,8 +153,10 @@ export const DownloaderForm: React.FC = () => {
           code: !data.success ? data.code : undefined,
           details: !data.success ? data.details : undefined,
         });
+        scrollToResult();
       } else {
         setVideoResult(data.data);
+        scrollToResult();
       }
     } catch (err: unknown) {
       if (err instanceof Error && err.name === 'AbortError') {
@@ -333,13 +345,16 @@ export const DownloaderForm: React.FC = () => {
         </div>
       )}
 
-      {/* Loading State Spinner & Skeleton */}
-      {isLoading && <LoadingState />}
+      {/* Results Anchor with Auto-Scroll Target */}
+      <div ref={resultRef} className="scroll-mt-6">
+        {/* Loading State Spinner & Skeleton */}
+        {isLoading && <LoadingState />}
 
-      {/* Success Video Result Display */}
-      {videoResult && !isLoading && (
-        <VideoResult video={videoResult} onReset={handleReset} />
-      )}
+        {/* Success Video Result Display */}
+        {videoResult && !isLoading && (
+          <VideoResult video={videoResult} onReset={handleReset} />
+        )}
+      </div>
     </div>
   );
 };
