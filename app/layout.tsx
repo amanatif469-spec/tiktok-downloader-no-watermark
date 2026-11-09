@@ -18,15 +18,15 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'TikSave',
+    title: 'TikSave 2.0',
   },
   title: {
-    default: 'TikSave — Download TikTok Videos Without Watermark (Tik Save)',
+    default: 'TikSave 2.0 — Download TikTok Videos Without Watermark',
     template: `%s | ${siteConfig.shortName}`,
   },
   description: siteConfig.description,
   keywords: siteConfig.keywords,
-  authors: [{ name: 'TikSave Team' }],
+  authors: [{ name: 'TikSave 2.0 Team' }],
   creator: siteConfig.shortName,
   publisher: siteConfig.shortName,
   applicationName: siteConfig.shortName,
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: siteConfig.url,
-    title: 'TikSave — Download TikTok Videos Without Watermark (Tik Save)',
+    title: 'TikSave 2.0 — Download TikTok Videos Without Watermark',
     description: siteConfig.description,
     siteName: siteConfig.shortName,
     images: [
@@ -56,18 +56,26 @@ export const metadata: Metadata = {
         url: `${siteConfig.url}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: 'TikSave - Online TikTok Downloader',
+        alt: 'TikSave 2.0 - Online TikTok Downloader',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'TikSave — Download TikTok Videos Without Watermark',
+    title: 'TikSave 2.0 — Download TikTok Videos Without Watermark',
     description: siteConfig.description,
     images: [`${siteConfig.url}/og-image.png`],
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
   },
   verification: {
     google: 'HtnR8gOPiH90J6gTtYhC92m1Ah526OqWY5ezhPZ3G-I',

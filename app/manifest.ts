@@ -2,9 +2,9 @@ import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'TikSave — TikTok Video Downloader',
-    short_name: 'TikSave',
-    description: 'Download TikTok videos without watermark in HD MP4 and MP3',
+    name: 'TikSave 2.0 — TikTok Video Downloader',
+    short_name: 'TikSave 2.0',
+    description: 'Download TikTok videos without watermark in HD MP4 and MP3 with TikSave 2.0',
     start_url: '/',
     display: 'standalone',
     orientation: 'portrait-primary',
