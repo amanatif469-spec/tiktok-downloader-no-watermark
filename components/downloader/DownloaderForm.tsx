@@ -39,6 +39,18 @@ export const DownloaderForm: React.FC = () => {
     }, 150);
   };
 
+  // Automatically and smoothly scroll to the loading state or video result as soon as DOM renders
+  useEffect(() => {
+    if (isLoading || videoResult) {
+      const timer = setTimeout(() => {
+        if (resultRef.current) {
+          resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 120);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading, videoResult]);
+
   useEffect(() => {
     // Check if Clipboard API is supported
     if (
@@ -345,8 +357,8 @@ export const DownloaderForm: React.FC = () => {
         </div>
       )}
 
-      {/* Results Anchor with Auto-Scroll Target */}
-      <div ref={resultRef} className="scroll-mt-6">
+      {/* Results Anchor with Auto-Scroll Target (offset for sticky navbar) */}
+      <div ref={resultRef} className="scroll-mt-24">
         {/* Loading State Spinner & Skeleton */}
         {isLoading && <LoadingState />}
 
